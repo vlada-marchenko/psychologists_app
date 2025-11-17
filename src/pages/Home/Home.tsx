@@ -15,7 +15,7 @@ export default function Home() {
             </div>
             <div className={css.right}>
                 <div className={css.image_container}>
-                <img className={css.image} src="/public/img/image.jpg" srcSet="/public/img/image@2x.jpg" alt="Illustration" />
+                <img className={css.image} src="/img/image.jpg" srcSet="/img/image@2x.jpg" alt="Illustration" />
                                 <div className={css.quantity}>
                 <div className={css.icon_quan}>
                     <Icon name="check" className={css.icon_sign} width={30} height={30}/>
