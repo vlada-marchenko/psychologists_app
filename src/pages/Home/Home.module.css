@@ -14,7 +14,7 @@ line-height: 1em;
 letter-spacing: 0.02em;
 color: #191A15;
 margin: 0;
-padding: 20px 0 12px 0;
+padding: 0px 0 12px 0;
 }
 
 .title_span {
@@ -71,8 +71,10 @@ position: relative;
 }
 
 .image {
-    width: 346px;
-    height: 390px;
+  width: 100%;
+  max-width: 346px;  
+  height: auto;      
+  display: block;
 }
 
 .image_container {
@@ -263,7 +265,7 @@ grid-template-columns: 1fr 1fr;
 }
 
 .image {
-    width: 464px;
+    max-width: 464px;
     height: 526px;
 }
 
