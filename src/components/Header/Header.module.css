@@ -108,7 +108,7 @@ a {
   gap: 8px;
   width: 124px;
   height: 48px;
-  border: 1px solid rgba(25, 26, 21, 0.2);
+  border: 1px solid #fbfbfb;
   border-radius: 30px;
   font-family: "Inter";
   font-style: normal;
@@ -119,6 +119,8 @@ a {
   color: #191a15;
   white-space: nowrap;
   cursor: pointer;
+  background-color: transparent;
+  color: #fbfbfb;
 }
 
 .registrationBtn {
@@ -260,6 +262,11 @@ a {
 
   .loginBtn:hover {
     border: none;
+  }
+
+  .loginBtn {
+      border: 1px solid rgba(25, 26, 21, 0.2);
+      color: #191a15;
   }
 
   .registrationBtn:hover {
