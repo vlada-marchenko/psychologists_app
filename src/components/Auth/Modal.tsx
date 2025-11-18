@@ -5,6 +5,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import css from './Modal.module.css'
+import Icon from "../Icon/Icon";
+import { updateProfile } from "firebase/auth";
 
 type AuthMode = 'login' | 'register';
 
@@ -44,7 +46,11 @@ export const Modal = ({ mode, onClose }: ModalProps) => {
             if (mode === 'login') {
                 await doSignInWithEmailAndPassword(email, password);
             } else {
-                await doCreateUserWithEmailAndPassword(name ?? '', email, password);
+                const cred = await doCreateUserWithEmailAndPassword( email, password);
+
+                if (name) {
+                    await updateProfile(cred.user, { displayName: name });
+                }
             }
             reset();
             onClose();
@@ -84,7 +90,9 @@ export const Modal = ({ mode, onClose }: ModalProps) => {
     return (
         <div className={css.backdrop} onClick={handleBackDropClick}>
             <div className={css.modal}>
-                <button type="button" className={css.close_btn} onClick={onClose} aria-label="Close">x</button>
+                <button type="button" className={css.close_btn} onClick={onClose} aria-label="Close">
+                    <Icon name="close" width={20} height={20} />
+                </button>
                 <h2 className={css.title}>
                     {mode === 'login' ? "Log In" : "Register"}
                 </h2>
@@ -94,19 +102,16 @@ export const Modal = ({ mode, onClose }: ModalProps) => {
                 <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
                     {mode === 'register' && (
                         <div className={css.field}>
-                            <label className={css.label} htmlFor="name">Name</label>
-                            <input className={css.input} id="name" type="text" {...register('name')} />
+                            <input className={css.input} id="name" placeholder="Name" type="text" {...register('name')} />
                             {errors.name && <p className={css.error}>{errors.name.message}</p>}
                         </div>
                     )}
                     <div className={css.field}>
-                        <label htmlFor="email" className={css.label}>Email</label>
-                        <input className={css.input} type="text" id="email" {...register("email")}/>
+                        <input className={css.input} placeholder="Email" type="text" id="email" {...register("email")}/>
                         {errors.email && <p className={css.error}>{errors.email.message}</p>}
                     </div>
                     <div className={css.field}>
-                        <label htmlFor="password" className={css.label}>Password</label>
-                        <input type="text" className={css.input} {...register("password")}/>
+                        <input type="text" placeholder="Password" className={css.input} {...register("password")}/>
                         {errors.password && <p className={css.error}>{errors.password.message}</p>}
                     </div>
 

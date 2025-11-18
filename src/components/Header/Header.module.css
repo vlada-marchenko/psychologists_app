@@ -262,6 +262,7 @@ a {
 
   .loginBtn:hover {
     border: none;
+    background: #191A1533;
   }
 
   .loginBtn {

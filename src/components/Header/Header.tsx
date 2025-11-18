@@ -11,7 +11,13 @@ export function Header() {
     const [menuOpen, setMenuOpen] = useState(false)
     const [authMode, setAuthMode] = useState<AuthMode | null>(null);
 
+    const closeMenu = () => {
+        setMenuOpen(false);
+    }
+
     const { isLoggedIn, user, logout } = useAuth()
+
+    const userName = user?.displayName ?? "";
 
     useEffect(() => {
         document.body.style.overflow = menuOpen ? "hidden" : "auto"
@@ -49,7 +55,7 @@ export function Header() {
                 <div className={css.iconProfile}>
                     <Icon name="profile" width={16} height={16}/>
                 </div>
-                <span className={css.name}>{user ? String(user) : ""}</span>
+                <span className={css.name}>{userName}</span>
                 </div>
                 <button onClick={handleLogout} type="submit" className={css.logoutBtn}>Log out</button>
             </div> :  <div className={css.buttons}>
@@ -64,13 +70,13 @@ export function Header() {
                 <div className={css.overlay} onClick={handleOverlayClick}>
                  <div className={css.mobileMenu} >
                 <nav className={css.navMob}>
-                <NavLink className={css.navItem} to="/">Home</NavLink>
-                <NavLink className={({ isActive }) =>
+                <NavLink className={css.navItem} to="/" onClick={closeMenu}>Home</NavLink>
+                <NavLink onClick={closeMenu} className={({ isActive }) =>
             `${css.navItem} ${isActive ? css.active : ""}`
           } to="psychologists">
                     Psychologists                  
                 </NavLink>
-                {isLoggedIn &&  <NavLink className={({ isActive }) =>
+                {isLoggedIn &&  <NavLink onClick={closeMenu} className={({ isActive }) =>
             `${css.navItem} ${isActive ? css.active : ""}`
           } to="favorites">Favorites</NavLink>}
             </nav>
@@ -80,12 +86,12 @@ export function Header() {
                 <div className={css.iconProfile}>
                     <Icon name="profile" width={16} height={16}/>
                 </div>
-                <span className={css.name}>{user ? String(user) : ""}</span>
+                <span className={css.name}>{userName}</span>
                 </div>
-                <button onClick={handleLogout} type="submit" className={css.logoutBtn}>Log out</button>
+                <button onClick={handleLogout}  type="submit" className={css.logoutBtn}>Log out</button>
             </div> :  <div className={css.buttonsMob}>
-                <button type="submit" className={css.loginBtn} onClick={() => setAuthMode('login')}>Log In</button>
-                <button type="submit" className={css.registrationBtn} onClick={() => setAuthMode('register')}>Registration</button>
+                <button type="submit" className={css.loginBtn} onClick={() => {setAuthMode('login'); closeMenu();}}>Log In</button>
+                <button type="submit" className={css.registrationBtn} onClick={() => {setAuthMode('register'); closeMenu()}}>Registration</button>
             </div>}
             </div>
                 </div>
