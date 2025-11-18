@@ -3,11 +3,11 @@ import { Header } from '../Header/Header.tsx'
 // import Psychologists from '../../pages/Psychologists/Psychologists.tsx'
 import Home from '../../pages/Home/Home.tsx'
 // import Favorites from '../../pages/Favorites/Favorites.tsx'
-import { useAuth } from '../../context/AuthContext.tsx';
+// import { useAuth } from '../../context/AuthContext.tsx';
 
 function App() {
 // const isAuth = false
-const { isLoggedIn } = useAuth();
+// const { isLoggedIn } = useAuth();
 
   return (
     <div>
