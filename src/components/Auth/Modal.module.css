@@ -1,0 +1,19 @@
+.backdrop {
+  position: fixed;          /* 👈 key line: pin to viewport, not header */
+  inset: 0;                 /* top:0, right:0, bottom:0, left:0 */
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;             /* above header/content */
+}
+
+.modal {
+  position: relative;
+  max-width: 566px;
+  width: 100%;
+  background: #fff;
+  border-radius: 16px;
+  padding: 40px 24px 32px;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.25);
+}
