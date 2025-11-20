@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { doSignInWithEmailAndPassword, doCreateUserWithEmailAndPassword } from "../../firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -35,6 +35,7 @@ const registerSchema = yup.object({
 export const Modal = ({ mode, onClose }: ModalProps) => {
     const navigate = useNavigate()
     const schema = mode === 'login' ? loginSchema : registerSchema;
+    const [isHashed, setIsHashed] = useState(true)
 
     const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<FormData>({
         resolver: yupResolver(schema)
@@ -107,11 +108,19 @@ export const Modal = ({ mode, onClose }: ModalProps) => {
                         </div>
                     )}
                     <div className={css.field}>
-                        <input className={css.input} placeholder="Email" type="text" id="email" {...register("email")}/>
+                        <input className={css.input} placeholder="Email" type="email" id="email" {...register("email")}/>
                         {errors.email && <p className={css.error}>{errors.email.message}</p>}
                     </div>
                     <div className={css.field}>
-                        <input type="text" placeholder="Password" className={css.input} {...register("password")}/>
+                        <input type={!isHashed ? 'text' : 'password'} placeholder="Password" className={css.input} {...register("password")}/>
+                        <button type='button' className={css.password_togle} onClick={() => setIsHashed(prev => !prev)}>
+                            <Icon
+                                name={isHashed ? "eye-off" : "eye"}
+                                className={css.password_icon}
+                                width={20}
+                                height={20}
+                            />
+                        </button>
                         {errors.password && <p className={css.error}>{errors.password.message}</p>}
                     </div>
 

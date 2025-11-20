@@ -107,6 +107,30 @@
   margin-top: 20px;
 }
 
+.field {
+  position: relative;
+}
+
+.password_togle {
+  position: absolute;
+  top: 45%;
+  right: 8px;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.password_icon {
+  fill: none;
+  stroke: #191A15;
+  stroke-width: 2px;
+}
+
 @media (min-width: 768px) {
   .modal {
     width: 566px;
@@ -149,4 +173,8 @@
   .submit_btn:hover {
     background: #36a379;
   }
+
+  .password_togle {
+  top: 40%;
+}
 }

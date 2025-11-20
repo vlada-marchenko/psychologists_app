@@ -260,6 +260,14 @@ a {
     background-color: #54be96;
   }
 
+  .logoutBtn {
+    background-color: transparent;
+  }
+
+  .logoutBtn:hover {
+    background: #191A1533;
+  }
+
   .loginBtn:hover {
     border: none;
     background: #191A1533;

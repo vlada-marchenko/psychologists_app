@@ -1,0 +1,547 @@
+.psychologists {
+  padding: 20px 10px;
+  max-width: 1224px;
+  margin: 0 auto;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 150px;
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 24px;
+  color: #191a15;
+}
+
+.filters_label {
+  font-family: Inter;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  color: #8a8a89;
+}
+
+.dropdown {
+  margin-top: 8px;
+}
+
+.btn_dropdown {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 18px;
+  width: 226px;
+  height: 48px;
+  background: #54be96;
+  border-radius: 14px;
+  border: none;
+}
+
+.dropdown_span {
+  font-family: Inter;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0%;
+  color: #fbfbfb;
+}
+
+.dropdown_icon {
+  fill: #fbfbfb;
+}
+
+.dropdown_list {
+  position: absolute;
+  width: 226px;
+  background: #ffffff;
+  box-shadow: 0px 20px 69px rgba(0, 0, 0, 0.07);
+  border-radius: 14px;
+  padding: 14px 18px;
+  list-style: none;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dropdown_item {
+  border: none;
+  background-color: transparent;
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #191a154d;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.dropdown_itemActive {
+  color: #191a15;
+}
+
+.span {
+  display: none;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.item {
+  background: #f2f2f2;
+  border-radius: 24px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar {
+  border: 2px solid rgba(84, 190, 150, 0.2);
+  border-radius: 30px;
+  width: 248px;
+  height: 248px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.img {
+  border-radius: 10px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.item_header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.name_cont {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.title {
+  font-family: Inter;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #8a8a89;
+  margin: 0;
+}
+
+.name {
+  margin: 0;
+  font-family: Inter;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 24px;
+  color: #191a15;
+}
+
+.right_side {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.rating {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+.rating_text {
+  font-family: Inter;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #191a15;
+}
+
+.price {
+  font-family: Inter;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #191a15;
+}
+
+.price span {
+  color: #38cd3e;
+}
+
+.price_like {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.like {
+  fill: none;
+  stroke: #191a15;
+  stroke-width: 2px;
+}
+
+.like:hover {
+  stroke: #54be96;
+}
+
+.tag_row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tag {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  padding: 8px 15px;
+  gap: 10px;
+  background: #ededed;
+  border-radius: 24px;
+  width: fit-content;
+}
+
+.tag_label {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #8a8a89;
+  white-space: normal;
+}
+
+.tag_value {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #191a15;
+  white-space: normal;
+}
+
+.about {
+  font-family: Inter;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0%;
+  color: #191a1580;
+}
+
+.btn_readmore {
+  border: none;
+  background-color: transparent;
+  text-decoration: underline;
+  font-family: Inter;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
+
+.btn_loadmore {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 14px 48px;
+  width: 176px;
+  height: 48px;
+  background: #54be96;
+  border-radius: 30px;
+  border: none;
+  font-family: Inter;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: -1%;
+  color: #fbfbfb;
+  white-space: nowrap;
+  margin: 0 auto;
+}
+
+.extra {
+  margin-top: 16px;
+}
+
+.reviews {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0;
+}
+
+.review {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.name_container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.person_avatar {
+  width: 44px;
+  height: 44px;
+  background: rgba(84, 190, 150, 0.2);
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Inter;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 20px;
+  line-height: 20px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  color: #54be96;
+}
+
+.name_rating {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.name_reviewer {
+  font-family: Inter;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  color: #191a15;
+}
+
+.rating_review {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.rating_count {
+  font-family: Inter;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  color: #191a15;
+}
+
+.comment {
+  font-family: Inter;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  color: #191a1580;
+  margin: 0;
+}
+
+.btn_appointment {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 14px 32px;
+  background: #54be96;
+  border-radius: 30px;
+  border: none;
+  font-family: Inter;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: -1%;
+  color: #fbfbfb;
+  margin: 20px auto 0;
+}
+
+@media (min-width: 1020px) {
+  .psychologists {
+    padding: 20px 25px;
+  }
+
+  .filters {
+    margin-top: 44px;
+  }
+
+  .list {
+    gap: 32px;
+  }
+
+  .item {
+    padding: 24px;
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    gap: 24px;
+  }
+
+  .avatar {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 0;
+    box-sizing: content-box;
+  }
+
+  .img {
+    border-radius: 25px;
+    width: 96px;
+    height: 96px;
+    padding: 10px;
+  }
+
+  .name_cont {
+    margin-bottom: 24px;
+  }
+
+  .item_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .right_side {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 16px;
+    gap: 16px;
+  }
+
+  .rating {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .rating_text {
+    font-family: Inter;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0%;
+    color: #191a15;
+  }
+
+  .span {
+    display: inline;
+    color: #191a1533;
+  }
+
+  .price {
+    font-family: Inter;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0%;
+    color: #191a15;
+  }
+
+  .price span {
+    color: #38cd3e;
+  }
+
+  .price_like {
+    gap: 28px;
+  }
+
+  .like {
+    fill: none;
+    stroke: #191a15;
+    stroke-width: 2px;
+  }
+
+  .like:hover {
+    color: #54be96;
+  }
+
+  .tag_row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .btn_readmore {
+    align-self: flex-start;
+    padding: 0;
+  }
+
+  .btn_loadmore:hover {
+    background: #36a379;
+  }
+
+  .btn_appointment:hover {
+    background: #36a379;
+  }
+
+  .reviews {
+    gap: 25px;
+  }
+
+  .review {
+    gap: 18px;
+  }
+
+  .btn_appointment {
+    margin-left: 0;
+    margin-top: 40px;
+  }
+
+  .dropdown_item:hover {
+    color: #191a15;
+  }
+}
