@@ -27,14 +27,42 @@ const FilterLabels: Record<FilterOption, string> = {
   all: "Show all",
 };
 
+const timeOptions: string[] = [
+  "09:00",
+  "09:30",
+  "10:00",
+  "10:30",
+  "11:00",
+  "11:30",
+  "12:00",
+  "12:30",
+  "13:00",
+  "13:30",
+  "14:00",
+  "14:30",
+  "15:00",
+  "15:30",
+  "16:00",
+  "16:30",
+  "17:00",
+];
+
 export default function Psychologists() {
   const [items, setItems] = useState<Psychologist[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [visibleCount, setVisibleCount] = useState(3);
+  const [phone, setPhone] = useState("");
 
   const [filterOpen, setFilterOpen] = useState(false);
   const [filter, setFilter] = useState<FilterOption>("a-z");
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPsychologist, setSelectedPsychologist] =
+    useState<Psychologist | null>(null);
+
+  const [meetingTimeOpen, setMeetingTimeOpen] = useState(false);
+  const [meetingTime, setMeetingTime] = useState<string>("");
 
   useEffect(() => {
     const load = async () => {
@@ -83,6 +111,37 @@ export default function Psychologists() {
     setFilter(value);
     setFilterOpen(false);
     setVisibleCount(3);
+  };
+
+  const handleOpenModal = (psychologist: Psychologist) => {
+    setSelectedPsychologist(psychologist);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedPsychologist(null);
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!selectedPsychologist) return;
+
+    const formData = new FormData(event.currentTarget);
+
+    const payload = {
+      psychologistName: selectedPsychologist.name,
+      name: formData.get("name"),
+      number: formData.get("number"),
+      time: formData.get("time"),
+      comment: formData.get("comment"),
+    };
+
+    console.log("Request:", payload);
+
+    event.currentTarget.reset();
+    handleCloseModal();
   };
 
   return (
@@ -224,7 +283,11 @@ export default function Psychologists() {
                         </li>
                       ))}
                     </ul>
-                    <button type="button" className={css.btn_appointment}>
+                    <button
+                      type="button"
+                      className={css.btn_appointment}
+                      onClick={() => handleOpenModal(p)}
+                    >
                       Make an appointment
                     </button>
                   </div>
@@ -244,6 +307,126 @@ export default function Psychologists() {
           );
         })}
       </ul>
+
+      {isModalOpen && selectedPsychologist && (
+        <div className={css.modal_backdrop}>
+          <div className={css.modal}>
+            <button
+              type="button"
+              className={css.modal_close}
+              onClick={handleCloseModal}
+            >
+              <Icon name="close" width={20} height={20} />
+            </button>
+            <h2 className={css.modal_title}>
+              Make an appointment with a psychologists
+            </h2>
+            <p className={css.modal_text}>
+              You are on the verge of changing your life for the better. Fill
+              out the short form below to book your personal appointment with a
+              professional psychologist. We guarantee confidentiality and
+              respect for your privacy.
+            </p>
+            <div className={css.psychologist_modal}>
+              <div className={css.modal_avatar}>
+                <img
+                  src={selectedPsychologist.avatar_url}
+                  alt={selectedPsychologist.name}
+                  width={44}
+                  height={44}
+                />
+              </div>
+              <div className={css.psychologist_info}>
+                <span className={css.modal_psychologist}>
+                  Your psychologists
+                </span>
+                <span className={css.modal_name}>
+                  {selectedPsychologist.name}
+                </span>
+              </div>
+            </div>
+
+            <form onSubmit={handleSubmit}>
+              <input
+                className={css.modal_input}
+                name="name"
+                type="text"
+                placeholder="Name"
+              />
+              <div className={css.row}>
+                <div className={css.phone}>
+                  <span className={css.phone_prefix}>+380</span>
+                  <input
+                    className={css.phone_input}
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                </div>
+                <div className={css.time_wrapper}>
+                  <input
+                    className={css.time_input}
+                    type="text"
+                    name="time"
+                    value={meetingTime}
+                    onClick={() => setMeetingTimeOpen((o) => !o)}
+                    placeholder="00:00"
+                  />
+                  <button
+                    type="button"
+                    className={css.time_btn}
+                    onClick={() => setMeetingTimeOpen((o) => !o)}
+                  >
+                    <Icon
+                      className={css.clock}
+                      name="clock"
+                      width={20}
+                      height={20}
+                    />
+                  </button>
+                  {meetingTimeOpen && (
+                    <div className={css.time_dropdown}>
+                      <ul className={css.time_list}>
+                        {timeOptions.map((t) => (
+                          <li key={t}>
+                            <button
+                              type="button"
+                              className={`${css.time_item} ${
+                                meetingTime === t ? css.time_item_active : ""
+                              }`}
+                              onClick={() => {
+                                setMeetingTime(t);
+                                setMeetingTimeOpen(false);
+                              }}
+                            >
+                              {t}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <input
+                className={css.modal_input}
+                name="email"
+                type="email"
+                placeholder="Email"
+              />
+              <input
+                className={css.modal_input}
+                name="comment"
+                type="text"
+                placeholder="Comment"
+              />
+
+              <button className={css.btn_submit}>Send</button>
+            </form>
+          </div>
+        </div>
+      )}
+
       <button
         type="button"
         className={css.btn_loadmore}
