@@ -1,4 +1,6 @@
-
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 import {
   fetchPsychologists,
   type Psychologist,
@@ -6,6 +8,8 @@ import {
 import { useEffect, useState, useMemo } from "react";
 import css from "./Psychologists.module.css";
 import Icon from "../../components/Icon/Icon";
+import toast from "react-hot-toast";
+import { ClipLoader } from "react-spinners";
 
 type FilterOption =
   | "a-z"
@@ -25,6 +29,27 @@ const FilterLabels: Record<FilterOption, string> = {
   "not-popular": "Not Popular",
   all: "Show all",
 };
+
+type AppointmentValues = {
+  name: string;
+  number: string;
+  time: string;
+  email: string;
+  comment: string;
+};
+
+const appointmentSchema = yup
+  .object({
+    name: yup.string().required("Name is required"),
+    number: yup.string().required("Phone number is required"),
+    time: yup.string().required("Meeting time is required"),
+    email: yup
+      .string()
+      .email("Enter a valid email")
+      .required("Email is required"),
+    comment: yup.string().required("Comment is required"),
+  })
+  .required();
 
 const timeOptions: string[] = [
   "09:00",
@@ -51,7 +76,7 @@ export default function Psychologists() {
   const [loading, setLoading] = useState(true);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [visibleCount, setVisibleCount] = useState(3);
-  const [phone, setPhone] = useState("");
+  const [, setPhone] = useState("");
 
   const [filterOpen, setFilterOpen] = useState(false);
   const [filter, setFilter] = useState<FilterOption>("a-z");
@@ -62,6 +87,17 @@ export default function Psychologists() {
 
   const [meetingTimeOpen, setMeetingTimeOpen] = useState(false);
   const [meetingTime, setMeetingTime] = useState<string>("");
+
+  const {
+    register,
+    handleSubmit: formHandleSubmit,
+    formState: { errors },
+    reset,
+    setValue,
+  } = useForm<AppointmentValues>({
+    resolver: yupResolver(appointmentSchema),
+    mode: "onSubmit",
+  });
 
   useEffect(() => {
     const load = async () => {
@@ -77,19 +113,30 @@ export default function Psychologists() {
     load();
   }, []);
 
-useEffect(() => {
-  if (isModalOpen) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "";
-  }
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
 
-  return () => {
-    document.body.style.overflow = "";
-  };
-}, [isModalOpen]);
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isModalOpen]);
 
+  useEffect(() => {
+    if (!isModalOpen) return;
 
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        handleCloseModal();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isModalOpen]);
 
   const filteredItems = useMemo(() => {
     let arr = [...items];
@@ -110,7 +157,12 @@ useEffect(() => {
     return arr;
   }, [items, filter]);
 
-  if (loading) return <p className={css.loader}>Loading....</p>;
+  if (loading)
+    return (
+      <div className={css.loader}>
+        <ClipLoader size={32} />
+      </div>
+    );
   if (!filteredItems.length)
     return <p className={css.loader}>No psychologists found</p>;
 
@@ -134,32 +186,24 @@ useEffect(() => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedPsychologist(null);
-    setPhone('')
-    setMeetingTime('')
+    setPhone("");
+    setMeetingTime("");
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const onSubmit = (data: AppointmentValues) => {
     if (!selectedPsychologist) return;
-
-    const formData = new FormData(event.currentTarget);
 
     const payload = {
       psychologistName: selectedPsychologist.name,
-      name: formData.get("name"),
-      number: formData.get("number"),
-      time: formData.get("time"),
-      comment: formData.get("comment"),
+      ...data,
     };
 
-    console.log('Request:', payload)
+    console.log(payload);
 
-    alert('Your appointment request has been sent successfully')
+    toast.success("Your appointment request has been sent successfully");
 
-    event.currentTarget.reset();
-    setPhone('')
-    setMeetingTime('')
+    reset();
+    setMeetingTime("");
     handleCloseModal();
   };
 
@@ -280,8 +324,11 @@ useEffect(() => {
                 {isExpanded && (
                   <div className={css.extra}>
                     <ul className={css.reviews}>
-                      {p.reviews.map((review) => (
-                        <li className={css.review}>
+                      {p.reviews.map((review, index) => (
+                        <li
+                          key={`${review.reviewer}-${index}`}
+                          className={css.review}
+                        >
                           <div className={css.name_container}>
                             <div className={css.person_avatar}>
                               {review.reviewer.slice(0, 1)}
@@ -328,8 +375,8 @@ useEffect(() => {
       </ul>
 
       {isModalOpen && selectedPsychologist && (
-        <div className={css.modal_backdrop}>
-          <div className={css.modal}>
+        <div className={css.modal_backdrop} onClick={handleCloseModal}>
+          <div className={css.modal} onClick={(e) => e.stopPropagation()}>
             <button
               type="button"
               className={css.modal_close}
@@ -366,82 +413,115 @@ useEffect(() => {
               </div>
             </div>
 
-            <form onSubmit={handleSubmit} className={css.modal_form}>
-              <input
-                className={css.modal_input}
-                name="name"
-                type="text"
-                placeholder="Name"
-              />
+            <form
+              onSubmit={formHandleSubmit(onSubmit)}
+              className={css.modal_form}
+            >
+              <div className={css.field}>
+                <input
+                  className={css.modal_input}
+                  type="text"
+                  placeholder="Name"
+                  {...register("name")}
+                />
+                {errors.name && (
+                  <p className={css.error}>{errors.name.message}</p>
+                )}
+              </div>
               <div className={css.row}>
-                <div className={css.phone}>
-                  <span className={css.phone_prefix}>+380</span>
-                  <input
-                    className={css.phone_input}
-                    type="tel"
-                    name="number"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                  />
-                </div>
-                <div className={css.time_wrapper}>
-                  <input
-                    className={css.time_input}
-                    type="text"
-                    name="time"
-                    value={meetingTime}
-                    onClick={() => setMeetingTimeOpen((o) => !o)}
-                    placeholder="00:00"
-                  />
-                  <button
-                    type="button"
-                    className={css.time_btn}
-                    onClick={() => setMeetingTimeOpen((o) => !o)}
-                  >
-                    <Icon
-                      className={css.clock}
-                      name="clock"
-                      width={20}
-                      height={20}
+                <div className={css.field}>
+                  <div className={css.phone}>
+                    <span className={css.phone_prefix}>+380</span>
+                    <input
+                      className={css.phone_input}
+                      type="tel"
+                      {...register("number")}
                     />
-                  </button>
-                  {meetingTimeOpen && (
-                    <div className={css.time_dropdown}>
-                      <span className={css.dropdown_text}>Meeting time</span>
-                      <ul className={css.time_list}>
-                        {timeOptions.map((t) => (
-                          <li key={t}>
-                            <button
-                              type="button"
-                              className={`${css.time_item} ${
-                                meetingTime === t ? css.time_item_active : ""
-                              }`}
-                              onClick={() => {
-                                setMeetingTime(t);
-                                setMeetingTimeOpen(false);
-                              }}
-                            >
-                              {t}
-                            </button>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                  </div>
+                  {errors.number && (
+                    <p className={css.error}>{errors.number.message}</p>
+                  )}
+                </div>
+                <div className={css.field}>
+                  <div className={css.time_wrapper}>
+                    <input
+                      className={css.time_input}
+                      type="text"
+                      readOnly
+                      value={meetingTime}
+                      onClick={() => setMeetingTimeOpen((o) => !o)}
+                      placeholder="00:00"
+                    />
+                    <input
+                      type="hidden"
+                      readOnly
+                      {...register("time")}
+                      value={meetingTime}
+                    />
+                    <button
+                      type="button"
+                      value={meetingTime}
+                      className={css.time_btn}
+                      onClick={() => setMeetingTimeOpen((o) => !o)}
+                    >
+                      <Icon
+                        className={css.clock}
+                        name="clock"
+                        width={20}
+                        height={20}
+                      />
+                    </button>
+                    {meetingTimeOpen && (
+                      <div className={css.time_dropdown}>
+                        <span className={css.dropdown_text}>Meeting time</span>
+                        <ul className={css.time_list}>
+                          {timeOptions.map((t) => (
+                            <li key={t}>
+                              <button
+                                type="button"
+                                className={`${css.time_item} ${
+                                  meetingTime === t ? css.time_item_active : ""
+                                }`}
+                                onClick={() => {
+                                  setMeetingTime(t);
+                                  setValue("time", t, { shouldValidate: true });
+                                  setMeetingTimeOpen(false);
+                                }}
+                              >
+                                {t}
+                              </button>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                  {errors.time && (
+                    <p className={css.error}>{errors.time.message}</p>
                   )}
                 </div>
               </div>
-              <input
-                className={css.modal_input}
-                name="email"
-                type="email"
-                placeholder="Email"
-              />
-              <textarea
-                className={css.comment_input}
-                name="comment"
-                placeholder="Comment"
-              />
-
+              <div className={css.field}>
+                <input
+                  className={css.modal_input}
+                  type="email"
+                  placeholder="Email"
+                  {...register("email")}
+                />
+                {errors.email && (
+                  <p className={css.error}>{errors.email.message}</p>
+                )}
+              </div>
+              <div className={css.field}>
+                <textarea
+                  className={css.comment_input}
+                  placeholder="Comment"
+                  {...register("comment")}
+                />
+                {errors.comment && (
+                  <p className={css.error}>{errors.comment.message}</p>
+                )}
+              </div>
               <button className={css.btn_submit}>Send</button>
             </form>
           </div>

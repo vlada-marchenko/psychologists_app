@@ -5,6 +5,7 @@ import Home from '../../pages/Home/Home.tsx'
 // import Favorites from '../../pages/Favorites/Favorites.tsx'
 // import { useAuth } from '../../context/AuthContext.tsx';
 import './App.css'
+import { Toaster } from 'react-hot-toast'
 
 function App() {
 // const { isLoggedIn } = useAuth();
@@ -17,6 +18,7 @@ function App() {
         <Route path="/psychologists" element={<Psychologists />}/> 
         {/* <Route path="/favorites" element={isLoggedIn ? <Favorites /> : <Navigate to="/" replace/>  }/> */}
       </Routes>
+      <Toaster position='top-center'/>
     </div>
   )
 }

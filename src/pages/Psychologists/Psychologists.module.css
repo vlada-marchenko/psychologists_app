@@ -272,7 +272,7 @@
   line-height: 24px;
   letter-spacing: 0%;
   vertical-align: middle;
-  color: #191A15;
+  color: #191a15;
 }
 
 .btn_loadmore {
@@ -541,7 +541,7 @@
 .row {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 4px;
 }
 
 .phone {
@@ -555,6 +555,7 @@
   flex: 1;
   width: 100%;
   box-sizing: border-box;
+  margin-bottom: 7px;
 }
 
 .phone_prefix {
@@ -626,7 +627,7 @@
 }
 
 .time_dropdown {
-    position: absolute;
+  position: absolute;
   width: 151px;
   height: 180px;
   background: #ffffff;
@@ -644,14 +645,14 @@
 
 .dropdown_text {
   font-family: Inter;
-/* font-weight: 500; */
-font-weight: 400;
-font-style: Medium;
-font-size: 16px;
-line-height: 24px;
-letter-spacing: 0%;
-vertical-align: middle;
-color: #191a15;
+  /* font-weight: 500; */
+  font-weight: 400;
+  font-style: Medium;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  color: #191a15;
 }
 
 .time_list {
@@ -670,17 +671,17 @@ color: #191a15;
   border: none;
   background-color: transparent;
   font-family: Inter;
-font-weight: 500;
-font-style: Medium;
-font-size: 16px;
-line-height: 20px;
-letter-spacing: 7px;
-text-align: center;
-color: #191A154D;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 7px;
+  text-align: center;
+  color: #191a154d;
 }
 
 .time_item_active {
-  color: #191A15;
+  color: #191a15;
 }
 
 .comment_input {
@@ -738,7 +739,7 @@ color: #191A154D;
 
 .clock {
   fill: none;
-  stroke: #191A15;
+  stroke: #191a15;
 }
 
 .modal_input,
@@ -750,6 +751,24 @@ color: #191A154D;
   font-size: 14px;
   line-height: 20px;
   color: #191a15;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.error {
+  margin-top: 0;
+  margin-bottom: 6px;
+  padding-left: 10px;
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #e53935;
+  text-align: left;
 }
 
 @media (min-width: 1020px) {
