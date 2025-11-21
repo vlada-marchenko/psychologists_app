@@ -444,19 +444,15 @@ export default function Psychologists() {
                 </div>
                 <div className={css.field}>
                   <div className={css.time_wrapper}>
+                    <div className={css.time_wrap}>
                     <input
                       className={css.time_input}
                       type="text"
                       readOnly
                       value={meetingTime}
+                      {...register("time")}
                       onClick={() => setMeetingTimeOpen((o) => !o)}
                       placeholder="00:00"
-                    />
-                    <input
-                      type="hidden"
-                      readOnly
-                      {...register("time")}
-                      value={meetingTime}
                     />
                     <button
                       type="button"
@@ -471,6 +467,7 @@ export default function Psychologists() {
                         height={20}
                       />
                     </button>
+                    </div>
                     {meetingTimeOpen && (
                       <div className={css.time_dropdown}>
                         <span className={css.dropdown_text}>Meeting time</span>

@@ -434,6 +434,7 @@
   border: none;
   background: transparent;
   cursor: pointer;
+  color: #191a15;
 }
 
 .modal_title {
@@ -622,7 +623,8 @@
   position: absolute;
   border: none;
   right: 5px;
-  top: 5px;
+  top: 50%;
+  transform: translateY(-59%);
   background-color: transparent;
 }
 
@@ -769,6 +771,10 @@
   line-height: 16px;
   color: #e53935;
   text-align: left;
+}
+
+.time_wrap {
+  position: relative;
 }
 
 @media (min-width: 1020px) {
