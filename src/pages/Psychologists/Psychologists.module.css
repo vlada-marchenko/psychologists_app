@@ -272,6 +272,7 @@
   line-height: 24px;
   letter-spacing: 0%;
   vertical-align: middle;
+  color: #191A15;
 }
 
 .btn_loadmore {
@@ -737,6 +738,7 @@ color: #191A154D;
 
 .clock {
   fill: none;
+  stroke: #191A15;
 }
 
 .modal_input,
