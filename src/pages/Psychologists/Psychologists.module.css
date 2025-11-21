@@ -404,26 +404,170 @@
   margin: 20px auto 0;
 }
 
+.modal_backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal {
+  position: relative;
+  width: 252px;
+  box-sizing: content-box;
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.25);
+}
+
+.modal_close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.modal_title {
+  font-family: Inter;
+  font-weight: 500;
+  font-size: 36px;
+  /* font-size: 40px; */
+  /* line-height: 48px; */
+  letter-spacing: -2%;
+  /* margin-bottom: 20px; */
+  margin-bottom: 15px;
+  color: #191a15;
+  margin-top: 10px;
+}
+
+.modal_text {
+  font-family: Inter;
+  font-weight: 400;
+  font-style: Regular;
+  /* font-size: 16px; */
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0%;
+  color: #191a1580;
+  /* margin-bottom: 40px; */
+  margin-bottom: 20px;
+}
+
+.psychologist_modal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+  /* margin-bottom: 40px; */
+  margin-bottom: 20px;
+}
+
+.modal_img {
+  border-radius: 15px;
+}
+
+.psychologist_info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.modal_psychologist {
+  font-family: Inter;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 12px;
+  line-height: 16px;
+  color: #8a8a89;
+}
+
+.modal_name {
+  font-family: Inter;
+  font-weight: 400;
+  font-style: Medium;
+  font-size: 16px;
+  line-height: 24px;
+  color: #191a15;
+}
+
+.modal_form {
+  display: flex;
+  flex-direction: column;
+  /* gap: 16px; */
+  gap: 4px;
+}
+
+.modal_input {
+  width: 100%;
+  height: 32px;
+  /* height: 52px; */
+  border: 1px solid rgba(25, 26, 21, 0.1);
+  border-radius: 8px;
+  /* border-radius: 13px; */
+  /* margin-bottom: 18px; */
+  margin-bottom: 7px;
+  padding-left: 10px;
+  box-sizing: border-box;
+}
+
+.modal_input::placeholder {
+  font-family: Inter;
+  font-weight: 400;
+  font-style: Regular;
+  /* font-size: 16px; */
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  transition: opacity 0.2s ease;
+  color: #191a15;
+  /* padding-left: 18px; */
+}
+
+.modal_input:focus::placeholder {
+  opacity: 0;
+}
+
 .row {
   display: flex;
+  flex-direction: column;
   gap: 12px;
 }
 
 .phone {
   display: flex;
   align-items: center;
-  border-radius: 14px;
-  border: 1px solid #e0e0e0;
-  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(25, 26, 21, 0.1);
+  padding-left: 10px;
+  padding-right: 1px;
   background: #fff;
   flex: 1;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .phone_prefix {
-  font-size: 14px;
-  white-space: nowrap;
   margin-right: 2px;
-  color: #555;
+  color: #191a15;
+  font-family: Inter;
+  font-weight: 400;
+  font-style: Regular;
+  /* font-size: 16px; */
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  transition: opacity 0.2s ease;
+  /* padding-left: 18px; */
 }
 
 .phone_input {
@@ -432,12 +576,177 @@
   flex: 1;
   font-size: 14px;
   padding: 10px 0;
+  border-radius: 8px;
+}
+
+.time_wrapper {
+  width: 100%;
+}
+
+.time_input {
+  width: 100%;
+  height: 32px;
+  /* height: 52px; */
+  border: 1px solid rgba(25, 26, 21, 0.1);
+  border-radius: 8px;
+  /* border-radius: 13px; */
+  /* margin-bottom: 18px; */
+  margin-bottom: 7px;
+  padding-left: 10px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.time_input::placeholder {
+  color: #191a15;
+  font-family: Inter;
+  font-weight: 400;
+  font-style: Regular;
+  /* font-size: 16px; */
+  font-size: 14px;
+  line-height: 20px;
+  vertical-align: middle;
+  transition: opacity 0.2s ease;
+  /* padding-left: 18px; */
+}
+
+.time_input:focus::placeholder {
+  opacity: 0;
+}
+
+.time_btn {
+  position: absolute;
+  top: 549px;
+  right: 26px;
+  border: none;
+  background-color: transparent;
+}
+
+.time_dropdown {
+    position: absolute;
+  width: 151px;
+  height: 180px;
+  background: #ffffff;
+  box-shadow: 0px 20px 69px rgba(0, 0, 0, 0.07);
+  border-radius: 14px;
+  padding: 16px;
+  padding-bottom: 10px;
+  list-style: none;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  right: 24px;
+}
+
+.dropdown_text {
+  font-family: Inter;
+/* font-weight: 500; */
+font-weight: 400;
+font-style: Medium;
+font-size: 16px;
+line-height: 24px;
+letter-spacing: 0%;
+vertical-align: middle;
+color: #191a15;
+}
+
+.time_list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  padding: 0;
+  overflow-y: auto;
+  max-height: 160px;
+  margin-top: 10px;
+}
+
+.time_item {
+  border: none;
+  background-color: transparent;
+  font-family: Inter;
+font-weight: 500;
+font-style: Medium;
+font-size: 16px;
+line-height: 20px;
+letter-spacing: 7px;
+text-align: center;
+color: #191A154D;
+}
+
+.time_item_active {
+  color: #191A15;
+}
+
+.comment_input {
+  width: 100%;
+  height: 116px;
+  /* height: 52px; */
+  border: 1px solid rgba(25, 26, 21, 0.1);
+  border-radius: 8px;
+  /* border-radius: 13px; */
+  /* margin-bottom: 18px; */
+  margin-bottom: 7px;
+  padding-left: 10px;
+  box-sizing: border-box;
+  padding-top: 8px;
+}
+
+.comment_input::placeholder {
+  color: #191a15;
+  font-family: Inter;
+  font-weight: 400;
+  font-style: Regular;
+  /* font-size: 16px; */
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  transition: opacity 0.2s ease;
+  /* padding-left: 18px; */
+}
+
+.comment_input:focus::placeholder {
+  opacity: 0;
+}
+
+.btn_submit {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  background: #54be96;
+  border-radius: 30px;
+  border: none;
+  /* height: 52px; */
+  height: 26px;
+  font-family: Inter;
+  font-weight: 400;
+  /* font-weight: 500; */
+  font-style: Medium;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: -1%;
+  color: #fbfbfb;
 }
 
 .clock {
   fill: none;
 }
 
+.modal_input,
+.phone_input,
+.time_input,
+.comment_input {
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #191a15;
+}
 
 @media (min-width: 1020px) {
   .psychologists {

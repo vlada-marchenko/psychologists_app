@@ -1,5 +1,4 @@
-// import { db } from "../../firebase/firebase"
-// import { collection, getDocs } from "firebase/firestore"
+
 import {
   fetchPsychologists,
   type Psychologist,
@@ -78,6 +77,20 @@ export default function Psychologists() {
     load();
   }, []);
 
+useEffect(() => {
+  if (isModalOpen) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "";
+  }
+
+  return () => {
+    document.body.style.overflow = "";
+  };
+}, [isModalOpen]);
+
+
+
   const filteredItems = useMemo(() => {
     let arr = [...items];
 
@@ -121,6 +134,8 @@ export default function Psychologists() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedPsychologist(null);
+    setPhone('')
+    setMeetingTime('')
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -138,9 +153,13 @@ export default function Psychologists() {
       comment: formData.get("comment"),
     };
 
-    console.log("Request:", payload);
+    console.log('Request:', payload)
+
+    alert('Your appointment request has been sent successfully')
 
     event.currentTarget.reset();
+    setPhone('')
+    setMeetingTime('')
     handleCloseModal();
   };
 
@@ -334,6 +353,7 @@ export default function Psychologists() {
                   alt={selectedPsychologist.name}
                   width={44}
                   height={44}
+                  className={css.modal_img}
                 />
               </div>
               <div className={css.psychologist_info}>
@@ -346,7 +366,7 @@ export default function Psychologists() {
               </div>
             </div>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className={css.modal_form}>
               <input
                 className={css.modal_input}
                 name="name"
@@ -359,6 +379,7 @@ export default function Psychologists() {
                   <input
                     className={css.phone_input}
                     type="tel"
+                    name="number"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                   />
@@ -386,6 +407,7 @@ export default function Psychologists() {
                   </button>
                   {meetingTimeOpen && (
                     <div className={css.time_dropdown}>
+                      <span className={css.dropdown_text}>Meeting time</span>
                       <ul className={css.time_list}>
                         {timeOptions.map((t) => (
                           <li key={t}>
@@ -414,10 +436,9 @@ export default function Psychologists() {
                 type="email"
                 placeholder="Email"
               />
-              <input
-                className={css.modal_input}
+              <textarea
+                className={css.comment_input}
                 name="comment"
-                type="text"
                 placeholder="Comment"
               />
 

@@ -80,10 +80,6 @@
   /* padding-left: 18px; */
 }
 
-.input:focus::placeholder {
-  opacity: 0;
-}
-
 .submit_btn {
   width: 100%;
   display: flex;
@@ -176,5 +172,6 @@
 
   .password_togle {
   top: 40%;
+
 }
 }
