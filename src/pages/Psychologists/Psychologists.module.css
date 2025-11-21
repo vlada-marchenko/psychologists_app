@@ -438,14 +438,14 @@
 .modal_title {
   font-family: Inter;
   font-weight: 500;
-  font-size: 36px;
+  font-size: 24px;
   /* font-size: 40px; */
   /* line-height: 48px; */
   letter-spacing: -2%;
   /* margin-bottom: 20px; */
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   color: #191a15;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .modal_text {
@@ -453,12 +453,13 @@
   font-weight: 400;
   font-style: Regular;
   /* font-size: 16px; */
-  font-size: 14px;
+  font-size: 12px;
   line-height: 20px;
   letter-spacing: 0%;
   color: #191a1580;
   /* margin-bottom: 40px; */
-  margin-bottom: 20px;
+  margin: 0;
+  margin-bottom: 15px;
 }
 
 .psychologist_modal {
@@ -575,12 +576,13 @@
   outline: none;
   flex: 1;
   font-size: 14px;
-  padding: 10px 0;
   border-radius: 8px;
+  height: 32px;
 }
 
 .time_wrapper {
   width: 100%;
+  position: relative;
 }
 
 .time_input {
@@ -616,9 +618,9 @@
 
 .time_btn {
   position: absolute;
-  top: 549px;
-  right: 26px;
   border: none;
+  right: 5px;
+  top: 5px;
   background-color: transparent;
 }
 
@@ -682,8 +684,8 @@ color: #191A154D;
 
 .comment_input {
   width: 100%;
-  height: 116px;
-  /* height: 52px; */
+  /* height: 116px; */
+  height: 75px;
   border: 1px solid rgba(25, 26, 21, 0.1);
   border-radius: 8px;
   /* border-radius: 13px; */
