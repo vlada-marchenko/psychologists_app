@@ -557,6 +557,7 @@
   width: 100%;
   box-sizing: border-box;
   margin-bottom: 7px;
+  height: 32px;
 }
 
 .phone_prefix {
@@ -581,6 +582,8 @@
   font-size: 14px;
   border-radius: 8px;
   height: 32px;
+  box-sizing: border-box;
+  padding: 0;
 }
 
 .time_wrapper {
@@ -742,6 +745,7 @@
 .clock {
   fill: none;
   stroke: #191a15;
+  color: #191a15;
 }
 
 .modal_input,
@@ -917,4 +921,114 @@
   .dropdown_item:hover {
     color: #191a15;
   }
+
+
+.modal {
+    width: 566px;
+    padding: 64px;
+    box-sizing: border-box;
+}
+
+.modal_close {
+    top: 28px;
+    right: 28px;
+}
+
+.modal_title {
+    font-size: 40px;
+    margin-bottom: 20px;
+    margin-top: 0;
+}
+
+.modal_text {
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.psychologist_modal {
+  margin-bottom: 30px;
+}
+
+.modal_form {
+  gap: 16px; 
+}
+
+.modal_input {
+    height: 52px;
+    border-radius: 13px;
+    padding-left: 18px;
+    margin-bottom: 0;
+}
+
+.modal_input::placeholder {
+    font-size: 16px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
+
+.phone {
+    height: 52px;
+    border-radius: 13px;
+    padding-left: 18px;
+    margin-bottom: 0;
+}
+
+.phone_prefix {
+  font-size: 16px;
+}
+
+.phone_input {
+    height: 52px;
+    border-radius: 13px;
+    padding-left: 18px;
+    margin-bottom: 0;
+}
+
+.time_input {
+    height: 52px;
+    border-radius: 13px;
+    padding-left: 18px;
+    margin-bottom: 0;
+}
+
+.time_input::placeholder {
+  font-size: 16px;
+}
+
+.time_btn {
+  right: 10px;
+  top: 60%;
+}
+
+.dropdown_text {
+  font-weight: 500; 
+}
+
+.time_item_active {
+  color: #191a15;
+}
+
+.comment_input {
+  height: 116px;
+  border-radius: 13px;
+  padding-left: 17px;
+  padding-top: 15px;
+  margin-bottom: 0;
+}
+
+.comment_input::placeholder {
+  font-size: 16px;
+}
+
+
+.btn_submit {
+    height: 52px;
+    font-weight: 500;
+    margin-top: 14px;
+}
+
 }

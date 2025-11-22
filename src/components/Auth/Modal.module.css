@@ -65,6 +65,7 @@
   /* margin-bottom: 18px; */
   margin-bottom: 7px;
   padding-left: 10px;
+  box-sizing: border-box;
 }
 
 .input::placeholder {
@@ -109,8 +110,8 @@
 
 .password_togle {
   position: absolute;
-  top: 45%;
-  right: 8px;
+  top: 40%;
+  right: 16px;
   transform: translateY(-50%);
   background: transparent;
   border: none;
