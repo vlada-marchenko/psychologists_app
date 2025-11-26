@@ -205,7 +205,7 @@
 
 .like {
   fill: none;
-  stroke: #191a15;
+  stroke: currentColor;;
   stroke-width: 2px;
 }
 
@@ -779,6 +779,31 @@
 
 .time_wrap {
   position: relative;
+}
+
+.like_btn {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* default icon color (outline) */
+  color: #191a15;
+}
+
+.like_btn_active {
+  color: #54be96;         /* heart turns green */
+}
+
+.like_btn_active .like{
+  fill: currentColor;
+}
+
+.like:focus {
+  fill: #54be96;
 }
 
 @media (min-width: 1020px) {

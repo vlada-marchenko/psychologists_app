@@ -10,6 +10,7 @@ import css from "./Psychologists.module.css";
 import Icon from "../../components/Icon/Icon";
 import toast from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
+import { useAuth } from "../../context/AuthContext";
 
 type FilterOption =
   | "a-z"
@@ -88,6 +89,9 @@ export default function Psychologists() {
   const [meetingTimeOpen, setMeetingTimeOpen] = useState(false);
   const [meetingTime, setMeetingTime] = useState<string>("");
 
+  const { user, isLoggedIn } = useAuth()
+  const [favoritesId, setFavoritesId] = useState<string[]>([])
+
   const {
     register,
     handleSubmit: formHandleSubmit,
@@ -137,6 +141,47 @@ export default function Psychologists() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isModalOpen]);
+
+  useEffect(() => {
+    if(!user) {
+      setFavoritesId([])
+      return
+    }
+
+    const key = `favorites_${user.uid}`
+    const raw = localStorage.getItem(key)
+    if(!raw) return
+
+    try {
+      const parsed = JSON.parse(raw)
+      if (Array.isArray(parsed)) {
+        setFavoritesId(parsed)
+      }
+    } catch (e) {
+      console.error(e)
+    }
+  }, [user])
+
+  const saveFavorites = (ids: string[]) => {
+    if(!user) return 
+    localStorage.setItem(`favorites_${user.uid}`, JSON.stringify(ids))
+  }
+
+  const handleToggleFavorite = (id: string) => {
+    if(!isLoggedIn || !user) {
+      toast('This fucntion is available only for authorized users')
+      return
+    }
+
+    setFavoritesId((prev) => {
+      const isFav = prev.includes(id)
+      const next = isFav ? prev.filter((fav) => fav !== id) : [...prev, id]
+
+      saveFavorites(next)
+      return next
+    })
+
+  }
 
   const filteredItems = useMemo(() => {
     let arr = [...items];
@@ -257,6 +302,7 @@ export default function Psychologists() {
       <ul className={css.list}>
         {visibleItems.map((p, index) => {
           const isExpanded = expandedIndex === index;
+          const isFav = favoritesId.includes(p.name)
 
           return (
             <li key={index} className={css.item}>
@@ -287,12 +333,14 @@ export default function Psychologists() {
                       <span className={css.price}>
                         Price / 1 hour: <span>{p.price_per_hour}$</span>
                       </span>
+                      <button type="button" className={css.like_btn} onClick={() => handleToggleFavorite(p.name)}>
                       <Icon
                         className={css.like}
-                        name="like"
+                        name={isFav ? 'like-on' : 'like'}
                         width={26}
                         height={26}
                       />
+                      </button>
                     </div>
                   </div>
                 </div>
