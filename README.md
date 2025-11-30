@@ -1,75 +1,171 @@
-# React + TypeScript + Vite
+# Psychologists App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a learning project — a small web application for browsing psychologists and booking a consultation.  
+A user can see a list of psychologists, filter them by different criteria, add some to favourites, and send a request for an appointment.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## What this project is about
 
-## React Compiler
+The idea is simple:
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- show a catalogue of psychologists with key information (experience, specialization, license, price, rating, reviews);
+- allow the user to:
+  - browse the list and open more details;
+  - add psychologists to a **Favourites** list using a heart button;
+  - fill in a form to request an appointment via a modal window.
 
-Note: This will impact Vite dev & build performances.
+Favourites are tied to the currently logged-in user and are stored so they don’t disappear after a page refresh.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+The project uses:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **React + TypeScript** – main UI and logic.
+- **React Router** – navigation between pages (psychologists, favourites, login/register).
+- **Authentication** (via `AuthContext`, e.g. Firebase Auth) – handling logged-in users.
+- **localStorage** – storing each user’s list of favourite psychologists  
+  (key format: `favorites_<userId>`).
+- **react-hook-form** + **yup** – forms and validation (appointment form).
+- **react-hot-toast** – toast notifications (success messages, “only for authorized users”, etc.).
+- **react-spinners** – loading spinner while fetching data.
+- **CSS Modules** – component-scoped styles.
+- Custom **Icon** component – SVG icons (including `like` and `like-on` for the heart button).
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## UI & layout
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+The interface is designed as a modern specialists catalogue:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Psychologists page
+
+Each psychologist card includes:
+
+- avatar;
+- name and title;
+- experience, specialization, license;
+- price per hour and rating;
+- short “about” text;
+- reviews (shown when the card is expanded).
+
+Main interactions:
+
+- **Filters**: sort and filter psychologists by name, price and popularity.
+- **Read more** button: expands the card and shows reviews and the appointment button.
+- **Heart button**:
+  - outlined heart (`like`) – psychologist is **not** in favourites;
+  - filled heart (`like-on`) – psychologist **is** in favourites.
+- **Make an appointment** button: opens a modal with a request form.
+
+### Favourites page
+
+- Shows only those psychologists that the user has added to favourites.
+- Uses the same card layout, design and filters as the main page.
+- The heart icon is in the active (filled) state, and clicking it again removes the psychologist from favourites.
+
+If you have a design in Figma or a PDF, you can add the link here, for example:
+
+> Design (mockup): `[link to design](https://...)`
+
+---
+
+## Requirements / Technical specification
+
+### 1. Psychologists list page
+
+- Fetch the list of psychologists from the API using `fetchPsychologists`.
+- For each psychologist display:
+  - avatar (`avatar_url`);
+  - name;
+  - experience;
+  - license;
+  - specialization;
+  - initial consultation info;
+  - rating;
+  - price per hour;
+  - reviews (inside the expanded section).
+
+- Implement filters:
+  - **A to Z / Z to A** – sorting by name;
+  - **Less than 10$ / More than 10$** – filtering by price;
+  - **Popular / Not popular** – filtering by rating;
+  - **Show all** – show the full list.
+
+### 2. Heart button & favourites logic
+
+- For a **non-authorized user**:
+  - when clicking the heart, show a modal or toast notification that this feature is only available for authorized users.
+
+- For an **authorized user**:
+  - on the first click:
+    - add the psychologist to the favourites list for that user  
+      (stored in `localStorage` under `favorites_<userId>`);
+    - change icon from `like` (outline) to `like-on` (filled).
+  - on repeated click:
+    - remove the psychologist from the favourites list;
+    - switch the icon back to the outlined state.
+
+- Favourites state:
+  - read from `localStorage` when the page loads;
+  - stored per user with key `favorites_${user.uid}`;
+  - persists after page refresh.
+
+### 3. Favourites page
+
+- Access:
+  - only available for logged-in users;
+  - if the user is not logged in, show a message like  
+    _“Please log in to see your favourite psychologists.”_
+
+- Logic:
+  - fetch all psychologists from the API;
+  - filter only those whose `name` (or `id`, depending on implementation) is in `favoriteIds` from `localStorage`;
+  - apply the same filters (A–Z, price, popular, show all).
+
+- UI:
+  - reuse the same card layout as on the main psychologists page;
+  - heart icon is shown as active (`like-on`);
+  - clicking the heart removes the psychologist from favourites and from the list.
+
+### 4. Appointment modal
+
+- Opens when the user clicks `Make an appointment`.
+- Form fields:
+  - **Name**
+  - **Phone number** (with prefix +380)
+  - **Meeting time** (selected from a dropdown based on `timeOptions`)
+  - **Email**
+  - **Comment**
+
+- Validation (with `yup` + `react-hook-form`):
+  - all fields are required;
+  - email must be valid.
+
+- On successful submit:
+  - show a success toast (`toast.success`);
+  - clear the form;
+  - close the modal.
+
+---
+
+## Example project structure
+
+```text
+src/
+  components/
+    Icon/
+      Icon.tsx
+  context/
+    AuthContext.tsx
+  pages/
+    Psychologists/
+      Psychologists.tsx
+      Psychologists.module.css
+    Favorites/
+      Favorites.tsx
+      Favorites.module.css
+  services/
+    psychologistsService.ts
