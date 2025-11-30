@@ -89,8 +89,8 @@ export default function Psychologists() {
   const [meetingTimeOpen, setMeetingTimeOpen] = useState(false);
   const [meetingTime, setMeetingTime] = useState<string>("");
 
-  const { user, isLoggedIn } = useAuth()
-  const [favoritesId, setFavoritesId] = useState<string[]>([])
+  const { user, isLoggedIn } = useAuth();
+  const [favoritesId, setFavoritesId] = useState<string[]>([]);
 
   const {
     register,
@@ -143,45 +143,44 @@ export default function Psychologists() {
   }, [isModalOpen]);
 
   useEffect(() => {
-    if(!user) {
-      setFavoritesId([])
-      return
+    if (!user) {
+      setFavoritesId([]);
+      return;
     }
 
-    const key = `favorites_${user.uid}`
-    const raw = localStorage.getItem(key)
-    if(!raw) return
+    const key = `favorites_${user.uid}`;
+    const raw = localStorage.getItem(key);
+    if (!raw) return;
 
     try {
-      const parsed = JSON.parse(raw)
+      const parsed = JSON.parse(raw);
       if (Array.isArray(parsed)) {
-        setFavoritesId(parsed)
+        setFavoritesId(parsed);
       }
     } catch (e) {
-      console.error(e)
+      console.error(e);
     }
-  }, [user])
+  }, [user]);
 
   const saveFavorites = (ids: string[]) => {
-    if(!user) return 
-    localStorage.setItem(`favorites_${user.uid}`, JSON.stringify(ids))
-  }
+    if (!user) return;
+    localStorage.setItem(`favorites_${user.uid}`, JSON.stringify(ids));
+  };
 
   const handleToggleFavorite = (id: string) => {
-    if(!isLoggedIn || !user) {
-      toast('This fucntion is available only for authorized users')
-      return
+    if (!isLoggedIn || !user) {
+      toast("This fucntion is available only for authorized users");
+      return;
     }
 
     setFavoritesId((prev) => {
-      const isFav = prev.includes(id)
-      const next = isFav ? prev.filter((fav) => fav !== id) : [...prev, id]
+      const isFav = prev.includes(id);
+      const next = isFav ? prev.filter((fav) => fav !== id) : [...prev, id];
 
-      saveFavorites(next)
-      return next
-    })
-
-  }
+      saveFavorites(next);
+      return next;
+    });
+  };
 
   const filteredItems = useMemo(() => {
     let arr = [...items];
@@ -302,7 +301,7 @@ export default function Psychologists() {
       <ul className={css.list}>
         {visibleItems.map((p, index) => {
           const isExpanded = expandedIndex === index;
-          const isFav = favoritesId.includes(p.name)
+          const isFav = favoritesId.includes(p.name);
 
           return (
             <li key={index} className={css.item}>
@@ -333,13 +332,17 @@ export default function Psychologists() {
                       <span className={css.price}>
                         Price / 1 hour: <span>{p.price_per_hour}$</span>
                       </span>
-                      <button type="button" className={css.like_btn} onClick={() => handleToggleFavorite(p.name)}>
-                      <Icon
-                        className={css.like}
-                        name={isFav ? 'like-on' : 'like'}
-                        width={26}
-                        height={26}
-                      />
+                      <button
+                        type="button"
+                        className={css.like_btn}
+                        onClick={() => handleToggleFavorite(p.name)}
+                      >
+                        <Icon
+                          className={css.like}
+                          name={isFav ? "like-on" : "like"}
+                          width={26}
+                          height={26}
+                        />
                       </button>
                     </div>
                   </div>
@@ -493,28 +496,28 @@ export default function Psychologists() {
                 <div className={css.field}>
                   <div className={css.time_wrapper}>
                     <div className={css.time_wrap}>
-                    <input
-                      className={css.time_input}
-                      type="text"
-                      readOnly
-                      value={meetingTime}
-                      {...register("time")}
-                      onClick={() => setMeetingTimeOpen((o) => !o)}
-                      placeholder="00:00"
-                    />
-                    <button
-                      type="button"
-                      value={meetingTime}
-                      className={css.time_btn}
-                      onClick={() => setMeetingTimeOpen((o) => !o)}
-                    >
-                      <Icon
-                        className={css.clock}
-                        name="clock"
-                        width={20}
-                        height={20}
+                      <input
+                        className={css.time_input}
+                        type="text"
+                        readOnly
+                        value={meetingTime}
+                        {...register("time")}
+                        onClick={() => setMeetingTimeOpen((o) => !o)}
+                        placeholder="00:00"
                       />
-                    </button>
+                      <button
+                        type="button"
+                        value={meetingTime}
+                        className={css.time_btn}
+                        onClick={() => setMeetingTimeOpen((o) => !o)}
+                      >
+                        <Icon
+                          className={css.clock}
+                          name="clock"
+                          width={20}
+                          height={20}
+                        />
+                      </button>
                     </div>
                     {meetingTimeOpen && (
                       <div className={css.time_dropdown}>
